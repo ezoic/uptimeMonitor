@@ -6,7 +6,9 @@ var http       = require('http');
 var url        = require('url');
 var express    = require('express');
 var config     = require('config');
-var socketIo   = require('socket.io');
+var socketIo = require('socket.io')({
+  transports  : [ 'websocket' ],
+});
 var fs         = require('fs');
 var monitor    = require('./lib/monitor');
 var analyzer   = require('./lib/analyzer');
@@ -91,15 +93,6 @@ app.emit('afterLastRoute', app);
 
 // Sockets
 var io = socketIo.listen(server);
-
-io.configure('production', function() {
-  io.enable('browser client etag');
-  io.set('log level', 1);
-});
-
-io.configure('development', function() {
-  if (!config.verbose) io.set('log level', 1);
-});
 
 CheckEvent.on('afterInsert', function(event) {
   io.sockets.emit('CheckEvent', event.toJSON());
