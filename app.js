@@ -6,9 +6,7 @@ var http       = require('http');
 var url        = require('url');
 var express    = require('express');
 var config     = require('config');
-var socketIo = require('socket.io')({
-  transports  : [ 'websocket' ],
-});
+var socketIo = require('socket.io');
 var fs         = require('fs');
 var monitor    = require('./lib/monitor');
 var analyzer   = require('./lib/analyzer');
