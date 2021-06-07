@@ -107,7 +107,7 @@ Check.methods.setLastTest = function(status, time, error) {
       timestamp: now,
       check: this,
       tags: this.tags,
-      message: status ? 'up' : 'down',
+      message: "3 sites down!",
       details: error
     });
     if (status && this.lastChanged && this.isUp != undefined) {
@@ -141,17 +141,26 @@ Check.methods.mustNotifyEvent = function(status) {
       this.errorCount++;
       return false;
     }
-    if (this.errorCount === this.alertTreshold) {
-      // enough down pings to trigger notification
-      return true;
-    }
-    // error count higher than treshold, that means the alert was already sent
-    return false;
+    returnErr = true;
+
+    this.find()
+    .sort({ lastChanged: -1 })
+    .limit(3)
+    .exec(function(err, events) {
+      if (err) return false;  
+      events.forEach(function(event) {
+        if(event.isUp == true){
+          returnErr = false;
+        }       
+      });
+    });  
+
+   return returnErr;
   }
   // check is up
   if (this.isUp != status && this.errorCount > this.alertTreshold) {
     // check goes up after reaching the down alert treshold before
-    return true;
+    return false;
   }
   // check either goes up after less than alertTreshold down pings, or is already up for long
   return false;
