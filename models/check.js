@@ -141,21 +141,15 @@ Check.methods.mustNotifyEvent = function(status) {
       this.errorCount++;
       return false;
     }
-    returnErr = true;
-
-    this.find()
-    .sort({ lastChanged: -1 })
-    .limit(3)
-    .exec(function(err, events) {
-      if (err) return false;  
-      events.forEach(function(event) {
-        if(event.isUp == true){
-          returnErr = false;
-        }       
-      });
-    });  
-
-   return returnErr;
+    console.log("Number down:")
+    
+    numberDown = this.find({ isUp: false }).count()
+    console.log(numberDown)
+    if(numberDown >= 3){
+      return true
+    }
+    return false
+    
   }
   // check is up
   if (this.isUp != status && this.errorCount > this.alertTreshold) {
