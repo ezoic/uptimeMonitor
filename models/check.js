@@ -91,7 +91,7 @@ Check.methods.togglePause = function() {
 
 Check.methods.setLastTest = function(status, time, error) {
   var now = time ? new Date(time) : new Date();
-  var mustNotifyEvent = this.mustNotifyEvent(status);
+  //var mustNotifyEvent = this.mustNotifyEvent(status);
 
   if (!this.firstTested) {
     this.firstTested = now;
@@ -106,28 +106,36 @@ Check.methods.setLastTest = function(status, time, error) {
     this.downtime = 0;
   }
 
-  if (mustNotifyEvent) {
-    var event = new CheckEvent({
-      timestamp: now,
-      check: this,
-      tags: this.tags,
-      message: "3 sites down!",
-      details: error
-    });
-    if (status && this.lastChanged && this.isUp != undefined) {
-      // Check comes back up
-      event.downtime = now.getTime() - this.lastChanged.getTime();
+  this.numberDown(function(err, number) {
+    if(err)
+    {
+      return this;
     }
-    event.save();
-    this.markEventNotified();
-  }
-  var durationSinceLastChange = now.getTime() - this.lastChanged.getTime();
-  if (status) {
-    this.uptime = durationSinceLastChange;
-  } else {
-    this.downtime = durationSinceLastChange;
-  }
-  return this;
+    if(number == 1){
+      var event = new CheckEvent({
+        timestamp: now,
+        check: this,
+        tags: this.tags,
+        message: "3 sites down!",
+        details: error
+      });
+      if (status && this.lastChanged && this.isUp != undefined) {
+        // Check comes back up
+        event.downtime = now.getTime() - this.lastChanged.getTime();
+      }
+      event.save();
+      this.markEventNotified();
+  
+      var durationSinceLastChange = now.getTime() - this.lastChanged.getTime();
+      if (status) {
+        this.uptime = durationSinceLastChange;
+      } else {
+        this.downtime = durationSinceLastChange;
+      }
+    }
+  }).then(function(){
+    return this;
+  });
 };
 
 Check.methods.mustNotifyEvent = function(status) {
