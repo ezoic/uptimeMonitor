@@ -143,7 +143,7 @@ Check.methods.mustNotifyEvent = function(status) {
     }
     console.log("Number down:")
     
-    numberDown = this.find({ isUp: false }).count()
+    numberDown = Check.find({ isUp: false }).count()
     console.log(numberDown)
     if(numberDown >= 3){
       return true
