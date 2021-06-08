@@ -47,7 +47,7 @@ Check.methods.setPollerParam = function(name, value) {
 };
 
 Check.methods.numberDown = function(callback) {
-  return this.find({ isUp: false }).count().exec(callback);
+  return this.db.model('Check').find({ isUp: false }).count().exec(callback);
 };
 
 Check.methods.getPollerParam = function(name) {
