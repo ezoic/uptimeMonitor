@@ -107,7 +107,7 @@ Check.methods.setLastTest = function(status, time, error) {
   }
   var self = this;
 
-  this.numberDown(function(err, number) {
+  return this.numberDown(function(err, number) {
     if(err)
     {
       return self;
