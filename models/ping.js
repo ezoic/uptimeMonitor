@@ -52,10 +52,11 @@ Ping.statics.createForCheck = function(status, timestamp, time, check, monitorNa
   }
   ping.save(function(err1) {
     if (err1) return callback(err1);
-    check.setLastTest(status, timestamp, error);
-    check.save(function(err2) {
-      if (err2) return callback(err2);
-      callback(null, ping);
+    check.setLastTest(status, timestamp, error).then(function(){
+      check.save(function(err2) {
+        if (err2) return callback(err2);
+        callback(null, ping);
+      });
     });
   });
 };

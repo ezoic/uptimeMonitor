@@ -115,8 +115,8 @@ Check.methods.setLastTest = function(status, time, error) {
     if(number == 1){
       var event = new CheckEvent({
         timestamp: now,
-        check: this,
-        tags: this.tags,
+        check: self,
+        tags: self.tags,
         message: "3 sites down!",
         details: error
       });
