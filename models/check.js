@@ -139,6 +139,8 @@ Check.methods.setLastTest = function(status, time, error) {
       }
     }
   }).then(function(){
+    console.log("does it go here?")
+    console.log(self)
     return self;
   });
 };

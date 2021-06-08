@@ -56,6 +56,8 @@ module.exports = function(app) {
       var status = req.body.status === 'true';
       Ping.createForCheck(status, req.body.timestamp, req.body.time, check, req.body.name, req.body.error, req.body.details,  function(err2, ping) {
         if (err2) {
+          console.log("this is error")
+          console.log(err2)
           return res.send(err2.message, 500);
         }
         res.json(ping);
