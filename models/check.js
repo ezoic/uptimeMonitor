@@ -157,6 +157,7 @@ Check.methods.mustNotifyEvent = function(status) {
       return false
 
     });
+    console.log("Does it get here?");
   
 
   }
