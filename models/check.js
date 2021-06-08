@@ -146,28 +146,27 @@ Check.methods.mustNotifyEvent = function(status) {
       return false;
     }
     console.log("Number down:")
+    alertNumber = false;
 
     this.numberDown(function(err, number) {
       console.log(err)
       console.log("NUMBER")
       console.log(number)
-      if(number >= 3){
-        return true
+      if(number == 1){
+        console.log("ya");
+        alertNumber= true;
       }
-      return false
+      alertNumber= false;
 
     });
+
     console.log("Does it get here?");
-  
+    console.log(alertNumber);
+    console.log(alertNumber);
+    console.log(alertNumber);
+    return false;
 
   }
-  // check is up
-  if (this.isUp != status && this.errorCount > this.alertTreshold) {
-    // check goes up after reaching the down alert treshold before
-    return false;
-  }
-  // check either goes up after less than alertTreshold down pings, or is already up for long
-  return false;
 };
 
 Check.methods.markEventNotified = function() {
