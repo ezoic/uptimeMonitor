@@ -151,7 +151,7 @@ Check.methods.mustNotifyEvent = function(status) {
       console.log(err)
       console.log("NUMBER")
       console.log(number)
-      if(numberDown >= 3){
+      if(number >= 3){
         return true
       }
       return false
