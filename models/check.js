@@ -145,28 +145,19 @@ Check.methods.mustNotifyEvent = function(status) {
       this.errorCount++;
       return false;
     }
-    console.log("Number down:")
     alertNumber = false;
 
     this.numberDown(function(err, number) {
-      console.log(err)
-      console.log("NUMBER")
-      console.log(number)
       if(number == 1){
-        console.log("ya");
-        alertNumber= true;
-        return true;
+        alertNumber = true;
       }
-      alertNumber= false;
-      return false;
-
     }).then(function(result){
       console.log("made it to then");
+      console.log(alertNumber);
       console.log(result);
 
-      return result;
+      return false;
     });
-    console.log("Does it get here?");
   }
 };
 
