@@ -146,8 +146,9 @@ Check.methods.mustNotifyEvent = function(status) {
       return false;
     }
     console.log("Number down:")
+
+    numberDown = this.db.model('Check').find({ isUp: false }).count()
     
-    numberDown = Check.numberDown()
     console.log(numberDown)
     if(numberDown >= 3){
       return true
