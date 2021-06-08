@@ -46,6 +46,10 @@ Check.methods.setPollerParam = function(name, value) {
   this.markModified('pollerParams');
 };
 
+Check.methods.numberDown = function(callback) {
+  return this.find({ isUp: false }).count().exec(callback);
+};
+
 Check.methods.getPollerParam = function(name) {
   if (!this.pollerParams) return;
   return this.pollerParams[name];
@@ -143,7 +147,7 @@ Check.methods.mustNotifyEvent = function(status) {
     }
     console.log("Number down:")
     
-    numberDown = Check.find({ isUp: false }).count()
+    numberDown = Check.numberDown()
     console.log(numberDown)
     if(numberDown >= 3){
       return true
