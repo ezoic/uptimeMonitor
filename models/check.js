@@ -147,14 +147,18 @@ Check.methods.mustNotifyEvent = function(status) {
     }
     console.log("Number down:")
 
-    numberDown = this.numberDown()
+    this.numberDown(function(err, number) {
+      console.log(err)
+      console.log("NUMBER")
+      console.log(number)
+      if(numberDown >= 3){
+        return true
+      }
+      return false
+
+    });
   
-    console.log(numberDown)
-    if(numberDown >= 3){
-      return true
-    }
-    return false
-    
+
   }
   // check is up
   if (this.isUp != status && this.errorCount > this.alertTreshold) {
