@@ -106,13 +106,17 @@ Check.methods.setLastTest = function(status, time, error) {
     this.downtime = 0;
   }
   var self = this;
+  console.log("new fun!")
 
   return this.numberDown(function(err, number) {
+    console.log("number")
+    console.log(number)
     if(err)
     {
       return self;
     }
     if(number == 1){
+      console.log("yessir?")
       var event = new CheckEvent({
         timestamp: now,
         check: self,
