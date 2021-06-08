@@ -155,17 +155,18 @@ Check.methods.mustNotifyEvent = function(status) {
       if(number == 1){
         console.log("ya");
         alertNumber= true;
+        return true;
       }
       alertNumber= false;
+      return false;
 
+    }).then(function(result){
+      console.log("made it to then");
+      console.log(result);
+
+      return result;
     });
-
     console.log("Does it get here?");
-    console.log(alertNumber);
-    console.log(alertNumber);
-    console.log(alertNumber);
-    return false;
-
   }
 };
 
