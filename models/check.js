@@ -152,11 +152,8 @@ Check.methods.mustNotifyEvent = function(status) {
         alertNumber = true;
       }
     }).then(function(result){
-      console.log("made it to then");
-      console.log(alertNumber);
       console.log(result);
-
-      return false;
+      return alertNumber;
     });
   }
 };
