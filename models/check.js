@@ -105,11 +105,12 @@ Check.methods.setLastTest = function(status, time, error) {
     this.uptime = 0;
     this.downtime = 0;
   }
+  var self = this;
 
   this.numberDown(function(err, number) {
     if(err)
     {
-      return this;
+      return self;
     }
     if(number == 1){
       var event = new CheckEvent({
@@ -119,22 +120,22 @@ Check.methods.setLastTest = function(status, time, error) {
         message: "3 sites down!",
         details: error
       });
-      if (status && this.lastChanged && this.isUp != undefined) {
+      if (status && self.lastChanged && self.isUp != undefined) {
         // Check comes back up
-        event.downtime = now.getTime() - this.lastChanged.getTime();
+        event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      this.markEventNotified();
+      self.markEventNotified();
   
-      var durationSinceLastChange = now.getTime() - this.lastChanged.getTime();
+      var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
-        this.uptime = durationSinceLastChange;
+        self.uptime = durationSinceLastChange;
       } else {
-        this.downtime = durationSinceLastChange;
+        self.downtime = durationSinceLastChange;
       }
     }
   }).then(function(){
-    return this;
+    return self;
   });
 };
 
