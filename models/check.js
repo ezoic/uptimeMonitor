@@ -109,14 +109,11 @@ Check.methods.setLastTest = function(status, time, error) {
   console.log("new fun!")
 
   return this.numberDown(function(err, number) {
-    console.log("number")
-    console.log(number)
     if(err)
     {
       return self;
     }
     if(number == 1){
-      console.log("yessir?")
       var event = new CheckEvent({
         timestamp: now,
         check: self,
@@ -129,8 +126,6 @@ Check.methods.setLastTest = function(status, time, error) {
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      console.log("what is self?")
-      console.log(self)
       //self.markEventNotified();
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
@@ -141,8 +136,6 @@ Check.methods.setLastTest = function(status, time, error) {
       }
     }
   }).then(function(){
-    console.log("does it go here?")
-    console.log(self)
     return self;
   });
 };
