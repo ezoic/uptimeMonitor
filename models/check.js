@@ -140,7 +140,7 @@ Check.methods.setLastTest = function(status, time, error) {
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      self.errorCount = self.alertTreshold + 1;
+      self.errorCount = self.errorCount + 1;
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
