@@ -117,7 +117,7 @@ Check.methods.setLastTest = function(status, time, error) {
     }
     console.log(number);
     console.log(self.errorCount);
-    if(number >= 3 && self.errorCount === 3){
+    if(number >= 3 && self.errorCount === 1){
       console.log("did it get here");
       
       var event = new CheckEvent({
