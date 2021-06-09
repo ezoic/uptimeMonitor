@@ -106,8 +106,11 @@ Check.methods.setLastTest = function(status, time, error) {
   }
 
   if (this.isUp != status) {
-    // check goes down for the first time
+    // check goes down
     this.errorCount = 1;
+  }
+  else{
+    this.errorCount = 0;
   }
   var self = this;
   return this.numberDown(function(err, number) {
