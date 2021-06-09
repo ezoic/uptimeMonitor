@@ -113,7 +113,7 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       return self;
     }
-    if(number == 1){
+    if(number >= 3){
       var event = new CheckEvent({
         timestamp: now,
         check: self,
