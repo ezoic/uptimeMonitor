@@ -91,7 +91,7 @@ Check.methods.togglePause = function() {
 
 Check.methods.setLastTest = function(status, time, error) {
   var now = time ? new Date(time) : new Date();
-  //var mustNotifyEvent = this.mustNotifyEvent(status);
+  var mustNotifyEvent = this.mustNotifyEvent(status);
 
   if (!this.firstTested) {
     this.firstTested = now;
@@ -111,12 +111,13 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       return self;
     }
-    if(number >= 3){
+    console.log(number);
+    if(number >= 3 && mustNotifyEvent){
       var event = new CheckEvent({
         timestamp: now,
         check: self,
         tags: self.tags,
-        message: "3 sites down!",
+        message: "down",
         details: error
       });
       if (status && self.lastChanged && self.isUp != undefined) {
@@ -153,18 +154,22 @@ Check.methods.mustNotifyEvent = function(status) {
       this.errorCount++;
       return false;
     }
-    alertNumber = false;
-
-    this.numberDown(function(err, number) {
-      if(number == 1){
-        alertNumber = true;
-      }
-    }).then(function(result){
-      console.log(result);
-      return alertNumber;
-    });
+    if (this.errorCount === this.alertTreshold) {
+      // enough down pings to trigger notification
+      return true;
+    }
+    // error count higher than treshold, that means the alert was already sent
+    return false;
   }
+  // check is up
+  if (this.isUp != status && this.errorCount > this.alertTreshold) {
+    // check goes up after reaching the down alert treshold before
+    return true;
+  }
+  // check either goes up after less than alertTreshold down pings, or is already up for long
+  return false;
 };
+
 
 Check.methods.markEventNotified = function() {
   // increase error count to disable notification if the next ping has the same status
