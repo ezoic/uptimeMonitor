@@ -123,7 +123,7 @@ Check.methods.setLastTest = function(status, time, error) {
     }
     console.log(number);
     console.log(self.errorCount);
-    console.log(self.isUp);
+    console.log(self.errorCount);
     if(number >= 3 && self.errorCount === 1){
       console.log("did it get here");
       
@@ -140,7 +140,7 @@ Check.methods.setLastTest = function(status, time, error) {
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      self.errorCount = self.errorCount + 1;
+      self.errorCount = 2;
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
