@@ -104,14 +104,17 @@ Check.methods.setLastTest = function(status, time, error) {
     this.uptime = 0;
     this.downtime = 0;
   }
+  console.log(this.name);
+  console.log(this.isUp);
 
-  if (this.isUp != status) {
+  if (this.isUp != true) {
     // check goes down
     this.errorCount = 1;
   }
   else{
     this.errorCount = 0;
   }
+  console.log(this.errorCount);
   var self = this;
   return this.numberDown(function(err, number) {
     if(err)
@@ -120,6 +123,7 @@ Check.methods.setLastTest = function(status, time, error) {
     }
     console.log(number);
     console.log(self.errorCount);
+    console.log(self.isUp);
     if(number >= 3 && self.errorCount === 1){
       console.log("did it get here");
       
