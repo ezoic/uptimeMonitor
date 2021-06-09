@@ -37,6 +37,10 @@ var registerNewEventsLogger = function() {
           message += 'went down ' + checkEvent.details;
           messageColor = 'red+bold';
           break;
+        case '3 sites down!':
+          message = '3 or more sites went down! ';
+          messageColor = 'red+bold';
+          break;
         case 'up':
           if (checkEvent.downtime) {
             message += 'went back up after ' +  Math.floor(checkEvent.downtime / 1000) + 's of downtime';
