@@ -112,7 +112,10 @@ Check.methods.setLastTest = function(status, time, error) {
       return self;
     }
     console.log(number);
+    console.log(mustNotifyEvent);
     if(number >= 3 && mustNotifyEvent){
+      console.log("did it get here");
+      
       var event = new CheckEvent({
         timestamp: now,
         check: self,
@@ -120,12 +123,13 @@ Check.methods.setLastTest = function(status, time, error) {
         message: "down",
         details: error
       });
+      console.log(event)
       if (status && self.lastChanged && self.isUp != undefined) {
         // Check comes back up
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      //self.markEventNotified();
+      self.markEventNotified();
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
