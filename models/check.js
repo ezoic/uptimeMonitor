@@ -91,6 +91,15 @@ Check.methods.togglePause = function() {
 
 Check.methods.setLastTest = function(status, time, error) {
   var now = time ? new Date(time) : new Date();
+  if (this.isUp != status) {
+    // check goes down for the first time
+    this.errorCount = 1;
+  }
+  if (this.errorCount < this.alertTreshold) {
+    // repeated down pings - increase error count until reaching the down alert treshold
+    this.errorCount++;
+  }
+
   var mustNotifyEvent = this.mustNotifyEvent(status);
 
   if (!this.firstTested) {
@@ -112,8 +121,9 @@ Check.methods.setLastTest = function(status, time, error) {
       return self;
     }
     console.log(number);
-    console.log(mustNotifyEvent);
-    if(number >= 3 && mustNotifyEvent){
+    console.log(self.errorCount);
+    console.log(self.alertTreshold);
+    if(number >= 3 && self.errorCount === self.alertTreshold){
       console.log("did it get here");
       
       var event = new CheckEvent({
@@ -129,7 +139,7 @@ Check.methods.setLastTest = function(status, time, error) {
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
-      self.markEventNotified();
+      self.errorCount = self.alertTreshold + 1;
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
@@ -147,6 +157,7 @@ Check.methods.mustNotifyEvent = function(status) {
   if (!this.firstTested) {
     return true;
   }
+
   if (!status) {
     // check is down
     if (this.isUp != status) {
