@@ -109,6 +109,10 @@ Check.methods.setLastTest = function(status, time, error) {
 
   if (this.isUp != true) {
     // check goes down
+    if(this.errorCount == 1)
+    {
+      this.errorCount = 2;
+    }
     this.errorCount = 1;
   }
   else{
