@@ -113,7 +113,9 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       this.errorCount = 2;
     }
-    this.errorCount = 1;
+    else{
+      this.errorCount = 1;
+    }
   }
   else{
     this.errorCount = 0;
@@ -125,8 +127,7 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       return self;
     }
-    console.log(number);
-    console.log(self.errorCount);
+    console.log("error count is:");
     console.log(self.errorCount);
     if(number >= 3 && self.errorCount === 1){
       console.log("did it get here");
