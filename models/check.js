@@ -104,8 +104,6 @@ Check.methods.setLastTest = function(status, time, error) {
     this.uptime = 0;
     this.downtime = 0;
   }
-  console.log(this.name);
-  console.log(this.isUp);
 
   if (this.isUp != true) {
     // check goes down
@@ -120,17 +118,13 @@ Check.methods.setLastTest = function(status, time, error) {
   else{
     this.errorCount = 0;
   }
-  console.log(this.errorCount);
   var self = this;
   return this.numberDown(function(err, number) {
     if(err)
     {
       return self;
     }
-    console.log("error count is:");
-    console.log(self.errorCount);
     if(number >= 3 && self.errorCount === 1){
-      console.log("did it get here");
       
       var event = new CheckEvent({
         timestamp: now,
@@ -139,7 +133,6 @@ Check.methods.setLastTest = function(status, time, error) {
         message: "down",
         details: error
       });
-      console.log(event)
       if (status && self.lastChanged && self.isUp != undefined) {
         // Check comes back up
         event.downtime = now.getTime() - self.lastChanged.getTime();
