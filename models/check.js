@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var moment   = require('moment');
 var async    = require('async');
+var sleep = require('system-sleep');
 
 // models dependencies
 var Ping             = require('../models/ping');
@@ -151,8 +152,6 @@ Check.methods.setLastTest = function(status, time, error) {
       }
       event.save();
       self.errorCount = 2;
-      await sleep(60000);
-
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
@@ -162,15 +161,12 @@ Check.methods.setLastTest = function(status, time, error) {
       }
     }
   }).then(function(){
+    sleep(1800000);
     return self;
   });
 };
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+
 
 Check.methods.mustNotifyEvent = function(status) {
   if (!this.firstTested) {
