@@ -124,7 +124,7 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       return self;
     }
-    if(number >= 3 && self.errorCount === 1){
+    if(number >= 6 && self.errorCount === 1){
       
       var event = new CheckEvent({
         timestamp: now,
