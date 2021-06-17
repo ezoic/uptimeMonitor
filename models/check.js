@@ -124,21 +124,24 @@ Check.methods.setLastTest = function(status, time, error) {
     {
       return self;
     }
-    if(number >= 6 && self.errorCount === 1){
+    if(number >= 75 && self.errorCount === 1){
       
       var event = new CheckEvent({
         timestamp: now,
         check: self,
         tags: self.tags,
         message: "down",
-        details: error
+        details: "25%+ sites down!!!"
       });
+
       if (status && self.lastChanged && self.isUp != undefined) {
         // Check comes back up
         event.downtime = now.getTime() - self.lastChanged.getTime();
       }
       event.save();
       self.errorCount = 2;
+      await new Promise(resolve => setTimeout(resolve, 500000));
+
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
       if (status) {
