@@ -151,7 +151,7 @@ Check.methods.setLastTest = function(status, time, error) {
       }
       event.save();
       self.errorCount = 2;
-      await new Promise(resolve => setTimeout(resolve, 500000));
+      await sleep(60000);
 
   
       var durationSinceLastChange = now.getTime() - self.lastChanged.getTime();
@@ -165,6 +165,12 @@ Check.methods.setLastTest = function(status, time, error) {
     return self;
   });
 };
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
 
 Check.methods.mustNotifyEvent = function(status) {
   if (!this.firstTested) {
